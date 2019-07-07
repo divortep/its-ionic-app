@@ -4,9 +4,10 @@
 
 export const environment = {
     production: false,
-    serverUrl: 'http://localhost:8080',
-    tasksEndpoint: '/tasks',
-    appliedTasksEndpoint: '/appliedTasks'
+    serverUrl: 'http://192.168.0.2:8080',
+    availableTasksEndpoint: '/availableTasks',
+    acceptedTasksEndpoint: '/acceptedTasks',
+    taskEndpoint: '/task'
 };
 
 /*

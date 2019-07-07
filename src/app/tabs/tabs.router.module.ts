@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
+import {AvailableTasksPage} from './available-tasks/available-tasks.page';
+import {AcceptedTasksPage} from './accepted-tasks/accepted-tasks.page';
 
 
 const routes: Routes = [
@@ -10,14 +12,12 @@ const routes: Routes = [
         children: [
             {
                 path: 'availableTasks',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: '../available_tasks/available-tasks.module#AvailableTasksPageModule'
-                    }
-                ]
+                component: AvailableTasksPage
             },
             {
+                path: 'acceptedTasks',
+                component: AcceptedTasksPage
+            }, {
                 path: '',
                 redirectTo: '/tabs/availableTasks',
                 pathMatch: 'full'

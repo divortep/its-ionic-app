@@ -13,7 +13,9 @@ import {APP_SERVICES} from './share/app-services';
 import {APP_STORES} from './share/app-stores';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [
+        AppComponent
+    ],
     entryComponents: [],
     imports: [
         BrowserModule,
