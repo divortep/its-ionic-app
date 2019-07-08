@@ -7,6 +7,7 @@ import {UiStateStore} from './share/state/uistate.store';
 import {Popup} from './share/model/popup.model';
 import {Subscription} from 'rxjs';
 import {filter} from 'rxjs/operators';
+import {FCM} from '@ionic-native/fcm/ngx';
 
 @Component({
     selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
         private _splashScreen: SplashScreen,
         private _statusBar: StatusBar,
         private _uiStateStore: UiStateStore,
-        private _toastController: ToastController
+        private _toastController: ToastController,
+        private fcm: FCM
     ) {
     }
 
@@ -42,8 +44,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
     initializeApp(): void {
         this._platform.ready().then(() => {
+            this.fcm.subscribeToTopic('its_topic')
+                .then(() => this.subscribeForNotification());
             this._statusBar.styleDefault();
             this._splashScreen.hide();
+        });
+    }
+
+    subscribeForNotification(): void {
+        this.fcm.onNotification().subscribe(data => {
+            if (data.wasTapped) {
+                console.log('Received in background');
+            } else {
+                console.log('Received in foreground');
+            }
         });
     }
 

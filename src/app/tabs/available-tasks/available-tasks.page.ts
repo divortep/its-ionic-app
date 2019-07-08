@@ -1,19 +1,20 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Task} from '../../share/model/task.model';
-import {Observable} from 'rxjs';
 import {TasksStore} from '../../share/state/tasks.store';
 import {ActionSheetController} from '@ionic/angular';
 import {TaskService} from '../../share/service/task.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'available-tasks',
     templateUrl: 'available-tasks.page.html',
     styleUrls: ['available-tasks.page.scss']
 })
-export class AvailableTasksPage implements OnInit {
+export class AvailableTasksPage implements OnInit, OnDestroy {
 
-    availableTasks$: Observable<Array<Task>> = this._tasksStore.availableTasks$;
     availableTasks: Array<Task>;
+
+    private _subscriptions: Subscription[] = [];
 
     constructor(private _tasksStore: TasksStore,
                 private _taskService: TaskService,
@@ -22,14 +23,19 @@ export class AvailableTasksPage implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        // this._tasksStore.availableTasks$.subscribe(tasks => {
-        //     if (tasks) {
-        //         this.availableTasks = tasks.slice();
-        //         this._changeRef.detectChanges();
-        //     }
-        // });
+        this._subscriptions.push(
+            this._tasksStore.availableTasks$.subscribe(tasks => {
+                if (tasks) {
+                    this.availableTasks = tasks.slice();
+                    this._changeRef.detectChanges();
+                }
+            }));
 
         await this._taskService.getAvailableTasks();
+    }
+
+    ngOnDestroy(): void {
+        this._subscriptions.forEach(subscription => subscription.unsubscribe());
     }
 
     async onTaskSelect(task: Task): Promise<void> {
@@ -42,13 +48,14 @@ export class AvailableTasksPage implements OnInit {
             buttons: [{
                 text: 'Only me',
                 icon: 'person',
-                handler: () => this._taskService.acceptTask(task.id)
+                handler: () => {
+                    this._taskService.acceptTask(task.id);
+                }
             }, {
                 text: 'With a teammate',
                 icon: 'contacts',
                 handler: () => {
-                    this._taskService.acceptTask(task.id, 'teammate')
-                        .then(() => this._changeRef.detectChanges());
+                    this._taskService.acceptTask(task.id, 'teammate');
                 }
             }, {
                 text: 'Cancel',
@@ -61,6 +68,9 @@ export class AvailableTasksPage implements OnInit {
     }
 
     doRefresh(event) {
-        this._taskService.getAvailableTasks().finally(() => event.target.complete());
+        Promise.all([
+            this._taskService.getAvailableTasks(),
+            this._taskService.getAcceptedTasks()
+        ]).finally(() => event.target.complete());
     }
 }

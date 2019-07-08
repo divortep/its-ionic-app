@@ -3,22 +3,5 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ng-container *ngIf="acceptedTasks$ | async as acceptedTasks; else loading">
-        <ng-container *ngIf="acceptedTasks.length; else noItems">
-            <app-tasks-list
-                    [tasks]="acceptedTasks"
-                    [bgColor]="'#d7ffdc'">
-            </app-tasks-list>
-        </ng-container>
-    </ng-container>
+    <app-tasks-list [tasks]="acceptedTasks" [bgColor]="'#d7ffdc'"></app-tasks-list>
 </ion-content>
-
-<ng-template #noItems>
-    <div class="app-center">No tasks!</div>
-</ng-template>
-
-<ng-template #loading>
-    <div class="app-center">
-        <ion-spinner name="crescent"></ion-spinner>
-    </div>
-</ng-template>

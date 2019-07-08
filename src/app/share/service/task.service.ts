@@ -54,16 +54,5 @@ export class TaskService extends BaseService {
             ),
             catchError(ex => super.handleError(ex))
         ).toPromise();
-
-        // subscribe((acceptedTask: AcceptedTask) => {
-        //         if (acceptedTask) {
-        //             Promise.all([
-        //                 this.getAvailableTasks(), this.getAcceptedTasks()]
-        //             ).finally(
-        //                () => this._uiStateStore.showSuccessPopup(`Task ${acceptedTask.number} has been accepted.`)
-        //             );
-        //         }
-        //     },
-        //     ex => super.handleError(ex));
     }
 }

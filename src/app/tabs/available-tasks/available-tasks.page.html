@@ -3,23 +3,8 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ng-container *ngIf="availableTasks$ | async as availableTasks; else loading">
-        <ng-container *ngIf="availableTasks.length; else noItems">
-            <app-tasks-list
-                    [tasks]="availableTasks"
+    <app-tasks-list [tasks]="availableTasks"
                     [bgColor]="'#fdffd8'"
                     (taskSelected)="onTaskSelect($event)">
-            </app-tasks-list>
-        </ng-container>
-    </ng-container>
+    </app-tasks-list>
 </ion-content>
-
-<ng-template #noItems>
-    <div class="app-center">No tasks!</div>
-</ng-template>
-
-<ng-template #loading>
-    <div class="app-center">
-        <ion-spinner name="crescent"></ion-spinner>
-    </div>
-</ng-template>
