@@ -7,6 +7,7 @@ export interface Task {
     address: string;
     quotedTime: string;
     items: string[];
+    hasPAX: boolean;
 }
 
 export interface AcceptedTask extends Task {

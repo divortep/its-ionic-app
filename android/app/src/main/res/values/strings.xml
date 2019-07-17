@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">its_ionic_app</string>
-    <string name="title_activity_main">its_ionic_app</string>
+    <string name="app_name">IKEA dashboard</string>
+    <string name="title_activity_main">IKEA dashboard</string>
     <string name="package_name">its.ionic.app</string>
     <string name="fileprovider_authority">its.ionic.app.fileprovider</string>
     <string name="custom_url_scheme">its.ionic.app</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_its_channel</string>
 </resources>

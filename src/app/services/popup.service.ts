@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
+import {Popup} from '../models/popup.model';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Popup} from '../model/popup.model';
 
-@Injectable()
-export class UiStateStore {
+@Injectable({providedIn: 'root'})
+export class PopupService {
+
+    constructor() {
+    }
 
     private _popupState: BehaviorSubject<Popup> = new BehaviorSubject(undefined);
 
@@ -24,6 +27,7 @@ export class UiStateStore {
             message: msg,
             color: 'danger',
             position: 'top',
+            duration: 5000,
             showCloseButton: true
         };
         this.showPopup(popup);
@@ -33,4 +37,3 @@ export class UiStateStore {
         this._popupState.next(popup);
     }
 }
-

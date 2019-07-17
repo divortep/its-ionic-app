@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {Task} from '../../share/model/task.model';
-import {TasksStore} from '../../share/state/tasks.store';
-import {TaskService} from '../../share/service/task.service';
+import {Task} from '../../models/task.model';
+import {TaskService} from '../../services/task.service';
 import {Subscription} from 'rxjs';
+import {PopupService} from '../../services/popup.service';
 
 @Component({
     selector: 'app-accepted-tasks',
@@ -15,21 +15,23 @@ export class AcceptedTasksPage implements OnInit, OnDestroy {
 
     private _subscriptions: Subscription[] = [];
 
-    constructor(private _tasksStore: TasksStore,
+    constructor(private _tasksService: TaskService,
+                private _popupService: PopupService,
                 private _taskService: TaskService,
                 private _changeRef: ChangeDetectorRef) {
     }
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
         this._subscriptions.push(
-            this._tasksStore.acceptedTasks$.subscribe(tasks => {
+            this._taskService.acceptedTasks$.subscribe(tasks => {
                 if (tasks) {
                     this.acceptedTasks = tasks.slice();
                     this._changeRef.detectChanges();
                 }
             }));
 
-        await this._taskService.getAcceptedTasks();
+        this._taskService.getAcceptedTasks()
+            .catch(err => this._popupService.showErrorPopup(JSON.stringify(err)));
     }
 
     ngOnDestroy(): void {

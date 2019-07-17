@@ -3,11 +3,25 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Platform, ToastController} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {UiStateStore} from './share/state/uistate.store';
-import {Popup} from './share/model/popup.model';
+import {PopupService} from './services/popup.service';
+import {Popup} from './models/popup.model';
 import {Subscription} from 'rxjs';
 import {filter} from 'rxjs/operators';
-import {FCM} from '@ionic-native/fcm/ngx';
+import {environment as env} from '../environments/environment';
+import {FCM} from 'capacitor-fcm';
+import {
+    Plugins,
+    PushNotification,
+    PushNotificationActionPerformed,
+    PushNotificationChannel,
+    PushNotificationsPlugin
+} from '@capacitor/core';
+import {AuthService} from './services/auth.service';
+import {Router} from '@angular/router';
+import {TaskService} from './services/task.service';
+
+const fcm = new FCM();
+const PushNotifications: PushNotificationsPlugin = Plugins.PushNotifications;
 
 @Component({
     selector: 'app-root',
@@ -21,48 +35,72 @@ export class AppComponent implements OnInit, OnDestroy {
         private _platform: Platform,
         private _splashScreen: SplashScreen,
         private _statusBar: StatusBar,
-        private _uiStateStore: UiStateStore,
+        private _popupService: PopupService,
         private _toastController: ToastController,
-        private fcm: FCM
+        private _authService: AuthService,
+        private _router: Router,
+        private _taskService: TaskService
     ) {
     }
 
     ngOnInit(): void {
-        this.initializeApp();
-
         this._subscriptions.push(
-            this._uiStateStore.popupState$
+            this._popupService.popupState$
                 .pipe(filter(Boolean))
                 .subscribe(popup => this.showPopup(popup))
         );
 
+        this.initializeApp();
     }
+
 
     ngOnDestroy(): void {
         this._subscriptions.forEach(subscription => subscription.unsubscribe());
+        fcm.unsubscribeFrom({topic: env.fmcTopic})
+            .catch(err => this.handleError(err));
     }
 
-    initializeApp(): void {
+    private initializeApp(): void {
         this._platform.ready().then(() => {
-            this.fcm.subscribeToTopic('its_topic')
-                .then(() => this.subscribeForNotification());
             this._statusBar.styleDefault();
             this._splashScreen.hide();
-        });
-    }
 
-    subscribeForNotification(): void {
-        this.fcm.onNotification().subscribe(data => {
-            if (data.wasTapped) {
-                console.log('Received in background');
-            } else {
-                console.log('Received in foreground');
+            if (!this._platform.is('desktop') && !this._platform.is('mobileweb')) {
+                this.registerNotification();
             }
+
+            this._authService.isAuthenticated$.subscribe(isAuthenticated =>
+                this._router.navigate([!isAuthenticated ? 'login' : '']));
         });
     }
 
-    async showPopup(popup: Popup): Promise<void> {
-        const toast = await this._toastController.create(popup);
-        toast.present();
+    private registerNotification() {
+        PushNotifications.register().then(_ => {
+            fcm.subscribeTo({topic: env.fmcTopic}).catch(err => this.handleError(err));
+        }).catch(err => this.handleError(err));
+
+        PushNotifications.createChannel({id: env.fmcChannel} as PushNotificationChannel)
+            .catch(err => this.handleError(err));
+
+        PushNotifications.addListener('pushNotificationReceived',
+            (notification: PushNotification) => {
+                this._taskService.refreshAllTasks();
+            }
+        );
+
+        PushNotifications.addListener('pushNotificationActionPerformed',
+            (notification: PushNotificationActionPerformed) => {
+                this._taskService.refreshAllTasks();
+            }
+        );
+    }
+
+    private handleError(err): void {
+        this._popupService.showErrorPopup(JSON.stringify(err));
+    }
+
+    private showPopup(popup: Popup): void {
+        this._toastController.create(popup)
+            .then(toast => toast.present());
     }
 }

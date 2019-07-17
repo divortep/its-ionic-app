@@ -1,0 +1,38 @@
+<ion-content>
+    <ion-grid>
+        <ion-row justify-content-center align-items-center>
+            <form [formGroup]="_credentialsForm" (ngSubmit)="onSubmit()" padding class="login-form">
+                <ion-list>
+                    <ion-item>
+                        <ion-input
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                formControlName="email">
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-input
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                formControlName="password">
+                        </ion-input>
+                    </ion-item>
+
+
+                    <ion-row justify-content-center padding>
+                        <ion-button
+                                type="submit"
+                                fill="outline"
+                                color="tertiary"
+                                shape="round"
+                                [disabled]="!_credentialsForm.valid">Login
+                        </ion-button>
+                    </ion-row>
+                </ion-list>
+            </form>
+        </ion-row>
+    </ion-grid>
+</ion-content>

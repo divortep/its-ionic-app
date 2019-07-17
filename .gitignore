@@ -24,11 +24,13 @@ www/
 node_modules/
 tmp/
 temp/
+target/
 platforms/
 plugins/
 plugins/android.json
 plugins/ios.json
 $RECYCLE.BIN/
+android/app/google-services.json
 
 .DS_Store
 Thumbs.db

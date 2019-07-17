@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Task} from '../../share/model/task.model';
-import {TaskService} from '../../share/service/task.service';
+import {Task} from '../../models/task.model';
+import {TaskService} from '../../services/task.service';
 
 @Component({
     selector: 'app-tasks-list',
@@ -10,10 +10,9 @@ import {TaskService} from '../../share/service/task.service';
 export class TasksListComponent {
 
     @Input() tasks: Array<Task>;
-    @Input() bgColor: string;
     @Output() taskSelected = new EventEmitter<Task>();
 
-    constructor(private _taskService: TaskService) {
+    constructor() {
     }
 
     onTaskClick(task: Task): void {

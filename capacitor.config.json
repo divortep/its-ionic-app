@@ -1,7 +1,12 @@
 {
   "appId": "its.ionic.app",
-  "appName": "its_ionic_app",
+  "appName": "Ikea tasks",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
 }

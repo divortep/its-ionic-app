@@ -6,9 +6,9 @@ import {FormsModule} from '@angular/forms';
 import {TabsPageRoutingModule} from './tabs.router.module';
 
 import {TabsPage} from './tabs.page';
-import {AvailableTasksPage} from './available-tasks/available-tasks.page';
+import {AvailableTasksPage} from '../pages/available-tasks/available-tasks.page';
 import {TasksListComponent} from '../components/tasks-list/tasks-list.component';
-import {AcceptedTasksPage} from './accepted-tasks/accepted-tasks.page';
+import {AcceptedTasksPage} from '../pages/accepted-tasks/accepted-tasks.page';
 
 @NgModule({
     imports: [

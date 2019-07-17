@@ -9,3 +9,13 @@
 .card--quoted-time {
   font-weight: bold;
 }
+
+.card--available-task {
+  border-top-style: solid;
+  border-top-color: #7044ff;
+}
+
+.card--accepted-task {
+  border-top-style: solid;
+  border-top-color: #10dc60;
+}

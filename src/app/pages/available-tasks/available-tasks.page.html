@@ -3,5 +3,6 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <app-tasks-list [tasks]="acceptedTasks" [bgColor]="'#d7ffdc'"></app-tasks-list>
+    <app-tasks-list [tasks]="availableTasks" (taskSelected)="onTaskSelect($event)">
+    </app-tasks-list>
 </ion-content>

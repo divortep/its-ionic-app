@@ -9,9 +9,24 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {APP_SERVICES} from './share/app-services';
-import {APP_STORES} from './share/app-stores';
-import {FCM} from '@ionic-native/fcm/ngx';
+import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
+import {IonicStorageModule, Storage} from '@ionic/storage';
+import {environment as env} from '../environments/environment';
+
+const jwtOptionsFactory = (storage) => {
+    return {
+        tokenGetter: () => storage.get('access_token'),
+        whitelistedDomains: [env.domain]
+    };
+};
+
+const jwtModuleOptions = {
+    jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [Storage]
+    }
+};
 
 @NgModule({
     declarations: [
@@ -23,13 +38,12 @@ import {FCM} from '@ionic-native/fcm/ngx';
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
+        IonicStorageModule.forRoot(),
+        JwtModule.forRoot(jwtModuleOptions)
     ],
     providers: [
-        APP_SERVICES,
-        APP_STORES,
         StatusBar,
         SplashScreen,
-        FCM,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

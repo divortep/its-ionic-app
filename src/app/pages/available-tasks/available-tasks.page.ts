@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {Task} from '../../share/model/task.model';
-import {TasksStore} from '../../share/state/tasks.store';
+import {Task} from '../../models/task.model';
 import {ActionSheetController} from '@ionic/angular';
-import {TaskService} from '../../share/service/task.service';
+import {TaskService} from '../../services/task.service';
 import {Subscription} from 'rxjs';
+import {PopupService} from '../../services/popup.service';
 
 @Component({
     selector: 'available-tasks',
@@ -16,22 +16,23 @@ export class AvailableTasksPage implements OnInit, OnDestroy {
 
     private _subscriptions: Subscription[] = [];
 
-    constructor(private _tasksStore: TasksStore,
+    constructor(private _popupService: PopupService,
                 private _taskService: TaskService,
                 private _actionSheetController: ActionSheetController,
                 private _changeRef: ChangeDetectorRef) {
     }
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
         this._subscriptions.push(
-            this._tasksStore.availableTasks$.subscribe(tasks => {
+            this._taskService.availableTasks$.subscribe(tasks => {
                 if (tasks) {
                     this.availableTasks = tasks.slice();
                     this._changeRef.detectChanges();
                 }
             }));
 
-        await this._taskService.getAvailableTasks();
+        this._taskService.getAvailableTasks()
+            .catch(err => this._popupService.showErrorPopup(JSON.stringify(err)));
     }
 
     ngOnDestroy(): void {
@@ -44,24 +45,8 @@ export class AvailableTasksPage implements OnInit, OnDestroy {
         }
 
         const actionSheet = await this._actionSheetController.create({
-            header: `Accept ${task.number} as`,
-            buttons: [{
-                text: 'Only me',
-                icon: 'person',
-                handler: () => {
-                    this._taskService.acceptTask(task.id);
-                }
-            }, {
-                text: 'With a teammate',
-                icon: 'contacts',
-                handler: () => {
-                    this._taskService.acceptTask(task.id, 'teammate');
-                }
-            }, {
-                text: 'Cancel',
-                icon: 'close',
-                role: 'cancel'
-            }]
+            header: `Accept ${task.number}:`,
+            buttons: this.getButtons(task)
         });
 
         await actionSheet.present();
@@ -72,5 +57,29 @@ export class AvailableTasksPage implements OnInit, OnDestroy {
             this._taskService.getAvailableTasks(),
             this._taskService.getAcceptedTasks()
         ]).finally(() => event.target.complete());
+    }
+
+    getButtons(task: Task): Array<any> {
+        const buttons = [];
+        if (!task.hasPAX) {
+            buttons.push({
+                text: 'Individually',
+                icon: 'person',
+                handler: () => {
+                    this._taskService.acceptTask(task.id);
+                }
+            });
+        }
+
+        buttons.push({
+            text: 'With a teammate',
+            icon: 'contacts',
+            handler: () => {
+                this._taskService.acceptTask(task.id, 'teammate');
+            }
+        });
+
+        buttons.push({text: 'Cancel', icon: 'close', role: 'cancel'});
+        return buttons;
     }
 }

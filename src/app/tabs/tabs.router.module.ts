@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
-import {AvailableTasksPage} from './available-tasks/available-tasks.page';
-import {AcceptedTasksPage} from './accepted-tasks/accepted-tasks.page';
+import {AvailableTasksPage} from '../pages/available-tasks/available-tasks.page';
+import {AcceptedTasksPage} from '../pages/accepted-tasks/accepted-tasks.page';
 
 
 const routes: Routes = [
