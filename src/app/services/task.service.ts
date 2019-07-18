@@ -25,7 +25,6 @@ export class TaskService {
     private getTasks<T extends Task>(url: string, onSuccess?: (tasks: Array<T>) => void): Observable<void | Array<T>> {
         return this._httpClient.get<Array<T>>(url).pipe(
             map(tasks => {
-                tasks = _.orderBy(tasks, ['createdDate'], ['desc']);
                 onSuccess(tasks);
                 return tasks;
             }),
@@ -35,20 +34,26 @@ export class TaskService {
 
     getAvailableTasks(): Promise<void | Array<Task>> {
         const url = env.serverUrl + env.availableTasksEndpoint;
-        return this.getTasks<AcceptedTask>(url, tasks => this._availableTasks.next(tasks)).toPromise();
+        return this.getTasks<AcceptedTask>(url, _tasks => {
+            const tasks = _.orderBy(_tasks, ['createdDate'], ['desc']);
+            this._availableTasks.next(tasks);
+        }).toPromise();
     }
 
-    getAcceptedTasks(): Promise<void | Array<Task>> {
+    getAcceptedTasks(): Promise<void | Array<AcceptedTask>> {
         const url = env.serverUrl + env.acceptedTasksEndpoint;
-        return this.getTasks<AcceptedTask>(url, tasks => this._acceptedTasks.next(tasks)).toPromise();
+        return this.getTasks<AcceptedTask>(url, _tasks => {
+            const tasks = _.orderBy(_tasks, ['acceptedDate'], ['desc']);
+            this._acceptedTasks.next(tasks);
+        }).toPromise();
     }
 
     refreshAllTasks() {
         Promise.all([this.getAvailableTasks(), this.getAcceptedTasks()]);
     }
 
-    acceptTask(taskId: string, teammate?: string): Promise<void> {
-        const url = `${env.serverUrl}${env.taskEndpoint}/${taskId}/accept${teammate ? '?teammate=' + teammate : ''}`;
+    acceptTask(taskId: string, withTeammate: boolean): Promise<void> {
+        const url = `${env.serverUrl}${env.taskEndpoint}/${taskId}/accept${withTeammate ? '?withTeammate=' + withTeammate : ''}`;
 
         return this._httpClient.get(url).pipe(
             map((acceptedTask: AcceptedTask) => {

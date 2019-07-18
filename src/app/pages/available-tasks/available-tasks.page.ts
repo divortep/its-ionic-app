@@ -66,7 +66,7 @@ export class AvailableTasksPage implements OnInit, OnDestroy {
                 text: 'Individually',
                 icon: 'person',
                 handler: () => {
-                    this._taskService.acceptTask(task.id);
+                    this._taskService.acceptTask(task.id, false);
                 }
             });
         }
@@ -75,7 +75,7 @@ export class AvailableTasksPage implements OnInit, OnDestroy {
             text: 'With a teammate',
             icon: 'contacts',
             handler: () => {
-                this._taskService.acceptTask(task.id, 'teammate');
+                this._taskService.acceptTask(task.id, true);
             }
         });
 

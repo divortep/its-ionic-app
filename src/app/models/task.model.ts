@@ -12,5 +12,5 @@ export interface Task {
 
 export interface AcceptedTask extends Task {
     acceptedDate: Date;
-    teammate?: string;
+    withTeammate: boolean;
 }

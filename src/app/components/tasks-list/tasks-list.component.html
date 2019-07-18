@@ -2,7 +2,7 @@
     <ng-container *ngIf="tasks.length; else noItems">
         <ion-card *ngFor="let task of tasks"
                   (click)="onTaskClick(task)"
-                  [class]="(task.acceptedDate || task.acceptedTo) ? 'card--accepted-task' : 'card--available-task'">
+                  [class]="task.acceptedDate ? 'card--accepted-task' : 'card--available-task'">
             <ion-card-content>
                 <ion-card-subtitle>
                     {{task.timeSlot}}
@@ -13,10 +13,10 @@
                 <ion-card-subtitle class="card--address">{{task.address}}</ion-card-subtitle>
                 <p *ngFor="let item of task.items">{{item}}</p>
 
-                <ng-container *ngIf="task.acceptedDate || task.acceptedTo">
+                <ng-container *ngIf="task.acceptedDate">
                     <ion-card-subtitle>
-                        <div *ngIf="task.acceptedDate">Accepted date: {{task.acceptedDate | date:'medium'}}</div>
-                        <div *ngIf="task.teammate">Teammate: {{task.teammate}}</div>
+                        <div *ngIf="task.acceptedDate">Accepted: {{task.acceptedDate | date:'medium'}}</div>
+                        <div *ngIf="task.withTeammate">With a teammate</div>
                     </ion-card-subtitle>
                 </ng-container>
             </ion-card-content>
