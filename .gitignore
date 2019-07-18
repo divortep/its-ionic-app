@@ -35,4 +35,4 @@ android/app/google-services.json
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-**/environment.prod.ts
+/src/environments/environment.prod.ts
