@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">IKEA dashboard</string>
-    <string name="title_activity_main">IKEA dashboard</string>
+    <string name="app_name">IKEA Tasks</string>
+    <string name="title_activity_main">IKEA Tasks</string>
     <string name="package_name">its.ionic.app</string>
     <string name="fileprovider_authority">its.ionic.app.fileprovider</string>
     <string name="custom_url_scheme">its.ionic.app</string>

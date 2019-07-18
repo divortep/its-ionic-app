@@ -66,5 +66,5 @@
     "tslint": "~5.17.0",
     "typescript": "~3.1.6"
   },
-  "description": "IKEA dashboard"
+  "description": "IKEA Tasks"
 }
