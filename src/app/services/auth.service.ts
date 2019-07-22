@@ -9,8 +9,24 @@ import {AuthResponse} from '../models/auth-response';
 import {Storage} from '@ionic/storage';
 import {Platform} from '@ionic/angular';
 import {PopupService} from './popup.service';
+import {JWT_OPTIONS} from '@auth0/angular-jwt';
 
 const TOKEN_KEY = 'access_token';
+
+const jwtOptionsFactory = (storage) => {
+    return {
+        tokenGetter: () => storage.get('access_token'),
+        whitelistedDomains: [env.domain]
+    };
+};
+
+export const jwtModuleOptions = {
+    jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [Storage]
+    }
+};
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -31,16 +47,12 @@ export class AuthService {
 
     checkToken(): void {
         this._storage.get(TOKEN_KEY).then(token => {
-            if (token) {
+            if (!token || this._helper.isTokenExpired(token)) {
+                this.logout();
+            } else {
                 const user: User = this._helper.decodeToken(token) as User;
-                const isExpired: boolean = this._helper.isTokenExpired(token);
-
-                if (!isExpired) {
-                    this._currentUser.next(user);
-                    this._isAuthenticated.next(true);
-                } else {
-                    this._storage.remove(TOKEN_KEY);
-                }
+                this._currentUser.next(user);
+                this._isAuthenticated.next(true);
             }
         });
     }

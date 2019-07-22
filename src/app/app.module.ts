@@ -9,24 +9,9 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
-import {IonicStorageModule, Storage} from '@ionic/storage';
-import {environment as env} from '../environments/environment';
-
-const jwtOptionsFactory = (storage) => {
-    return {
-        tokenGetter: () => storage.get('access_token'),
-        whitelistedDomains: [env.domain]
-    };
-};
-
-const jwtModuleOptions = {
-    jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory,
-        deps: [Storage]
-    }
-};
+import {JwtModule} from '@auth0/angular-jwt';
+import {IonicStorageModule} from '@ionic/storage';
+import {jwtModuleOptions} from './services/auth.service';
 
 @NgModule({
     declarations: [

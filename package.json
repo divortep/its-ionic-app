@@ -7,7 +7,7 @@
     "ng": "ng",
     "start": "ionic serve --livereload",
     "build": "ionic build && npx cap sync",
-    "prod-build": "ionic build --prod && npx cap sync",
+    "build-prod": "ionic build --prod && npx cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
