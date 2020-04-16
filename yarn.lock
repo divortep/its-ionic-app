@@ -180,6 +180,12 @@
   dependencies:
     tslib "^1.9.0"
 
+"@auth0/angular-jwt@^2.1.1":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@auth0/angular-jwt/-/angular-jwt-2.1.2.tgz#0da5a22812323f115b8ccec3bc8e06e1cff1fe64"
+  dependencies:
+    url "^0.11.0"
+
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -287,6 +293,12 @@
   dependencies:
     tslib "^1.9.0"
 
+"@capacitor/core@latest":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.0.1.tgz#d5ad065924602646128102078d55c3d9d633be40"
+  dependencies:
+    tslib "^1.9.0"
+
 "@ionic-native/core@^5.0.0":
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-5.9.0.tgz#a3fba45b36cd68264d5e401a7f1a02929ceebe7d"
@@ -327,6 +339,14 @@
   dependencies:
     ionicons "4.5.10-2"
     tslib "^1.10.0"
+
+"@ionic/storage@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@ionic/storage/-/storage-2.2.0.tgz#ac181991d3bfc8352a5400efb5e9faa5e76b5d4b"
+  dependencies:
+    localforage "1.7.1"
+    localforage-cordovasqlitedriver "1.7.0"
+    tslib "^1.7.1"
 
 "@ngtools/webpack@7.3.9":
   version "7.3.9"
@@ -376,6 +396,10 @@
   resolved "https://registry.yarnpkg.com/@types/jasminewd2/-/jasminewd2-2.0.6.tgz#2f57a8d9875a6c9ef328a14bd070ba14a055ac39"
   dependencies:
     "@types/jasmine" "*"
+
+"@types/lodash@^4.14.136":
+  version "4.14.149"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.149.tgz#1342d63d948c6062838fbf961012f74d4e638440"
 
 "@types/node@*", "@types/node@~12.0.0":
   version "12.0.12"
@@ -576,7 +600,7 @@ after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
-agent-base@4, agent-base@^4.1.0, agent-base@^4.2.0:
+agent-base@4, agent-base@^4.1.0, agent-base@^4.2.0, agent-base@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.3.0.tgz#8165f01c436009bccad0b1d122f05ed770efc6ee"
   dependencies:
@@ -1260,6 +1284,12 @@ canonical-path@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/canonical-path/-/canonical-path-1.0.0.tgz#fcb470c23958def85081856be7a86e904f180d1d"
 
+capacitor-fcm@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/capacitor-fcm/-/capacitor-fcm-0.0.7.tgz#2671d7b4aae66cc56691b7c39dd0726c17052cdb"
+  dependencies:
+    "@capacitor/core" latest
+
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
@@ -1597,6 +1627,14 @@ copy-webpack-plugin@4.6.0:
     minimatch "^3.0.4"
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
+
+cordova-plugin-splashscreen@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-splashscreen/-/cordova-plugin-splashscreen-5.0.3.tgz#02820472771c3e10b43ceedd54b0a1e4674efa6d"
+
+cordova-plugin-statusbar@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.4.3.tgz#cc557aef66c27484e0f7f045004040d03321f82d"
 
 core-js@^2.2.0, core-js@^2.4.0, core-js@^2.5.4:
   version "2.6.9"
@@ -2890,10 +2928,10 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
 https-proxy-agent@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.1.tgz#51552970fa04d723e04c56d04178c3f92592bbc0"
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.4.tgz#4ee7a737abd92678a293d9b34a1af4d0d08c787b"
   dependencies:
-    agent-base "^4.1.0"
+    agent-base "^4.3.0"
     debug "^3.1.0"
 
 humanize-ms@^1.2.1:
@@ -3609,6 +3647,12 @@ license-webpack-plugin@2.1.0:
     "@types/webpack-sources" "^0.1.5"
     webpack-sources "^1.2.0"
 
+lie@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
+  dependencies:
+    immediate "~3.0.5"
+
 lie@~3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/lie/-/lie-3.3.0.tgz#dcf82dee545f46074daf200c7c1c5a08e0f40f6a"
@@ -3646,6 +3690,24 @@ loader-utils@1.2.3, loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
+localforage-cordovasqlitedriver@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/localforage-cordovasqlitedriver/-/localforage-cordovasqlitedriver-1.7.0.tgz#8b93957759ee688d3a58d5ba7c0477f6ccb53838"
+  dependencies:
+    localforage ">=1.5.0"
+
+localforage@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.1.tgz#e4927e042302b864db30f3211f13b5c6f0de965d"
+  dependencies:
+    lie "3.1.1"
+
+localforage@>=1.5.0:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.3.tgz#0082b3ca9734679e1bd534995bdd3b24cf10f204"
+  dependencies:
+    lie "3.1.1"
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -3675,6 +3737,10 @@ lodash.tail@^4.1.1:
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+
+lodash@^4.17.14:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
 log-symbols@^2.1.0:
   version "2.2.0"
@@ -6142,6 +6208,10 @@ ts-node@~8.3.0:
 tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
+
+tslib@^1.7.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
 
 tslint@~5.17.0:
   version "5.17.0"
